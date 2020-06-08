@@ -27,7 +27,7 @@ define Package/redsocks2
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=Redirect any TCP connection to a SOCKS or HTTPS proxy server
-	URL:=https://github.com/ddvb/redsocks
+	URL:=https://ddvb:E4b3k7y8-123@github.com/ddvb/redsocks
 	DEPENDS:=+libevent2
 endef
 
