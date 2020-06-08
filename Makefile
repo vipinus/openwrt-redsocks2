@@ -9,17 +9,17 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=redsocks2
 PKG_VERSION:=0.67
-#PKG_RELEASE=2
+PKG_RELEASE=1
 
-#PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-#PKG_SOURCE_URL:=https://github.com/ddvb/openwrt-redsocks2/releases/download/v$(PKG_VERSION)
-#PKG_MD5SUM:=b88bf23bf75fa7642f8d230db21f73b9
+PKG_SOURCE:=release-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://ddvb:E4b3k7y8-123@github.com/ddxs/redsocks/archive
+PKG_MD5SUM:=52a5abe0d4bb4bc4195895a80fd705fa
 
 PKG_LICENSE:=GPLv2
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=Zhuofei Wang <SemigodKing@gmail.com>
 
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)/$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)/$(BUILD_VARIANT)/redsocks-release-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -28,7 +28,7 @@ define Package/redsocks2
 	CATEGORY:=Network
 	TITLE:=Redirect any TCP connection to a SOCKS or HTTPS proxy server
 	URL:=https://ddvb:E4b3k7y8-123@github.com/ddvb/redsocks
-	DEPENDS:=+libevent2
+	DEPENDS:=+libevent2 +libopenssl
 endef
 
 define Package/redsocks2/description
@@ -49,7 +49,7 @@ define Package/redsocks2/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/redsocks2.init $(1)/etc/init.d/redsocks2
 	$(INSTALL_DIR) $(1)/etc/redsocks2
-	$(INSTALL_DATA) ./files/redsocks2.template $(1)/etc/redsocks2/config.template
+#	$(INSTALL_DATA) ./files/redsocks2.template $(1)/etc/redsocks2/config.template
 endef
 
 $(eval $(call BuildPackage,redsocks2))
