@@ -49,7 +49,7 @@ define Package/redsocks2/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/redsocks2.init $(1)/etc/init.d/redsocks2
 	$(INSTALL_DIR) $(1)/etc/redsocks2
-#	$(INSTALL_DATA) ./files/redsocks2.template $(1)/etc/redsocks2/config.template
+	$(INSTALL_DATA) ./files/redsocks2.template $(1)/etc/redsocks2/config.template
 endef
 
 $(eval $(call BuildPackage,redsocks2))
