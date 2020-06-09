@@ -12,7 +12,7 @@ PKG_VERSION:=0.67
 PKG_RELEASE=1
 
 PKG_SOURCE:=release-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://ddvb:E4b3k7y8-123@github.com/ddxs/redsocks/archive
+PKG_SOURCE_URL:=https://ddvb:E4b3k7y8-123@github.com/ddvb/redsocks/archive
 PKG_MD5SUM:=b1ccd0f6bcd163f86d2f20407787bc63
 
 PKG_LICENSE:=GPLv2
