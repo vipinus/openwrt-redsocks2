@@ -21,6 +21,7 @@ get_args() {
 }
 
 start_redsocks2() {
+	ulimit -n 1048576
 	mkdir -p $(dirname $CONFIG)
 	sed -e "s#|LOCAL_PORT|#$local_port#" \
 		-e "s#|PROXY_TYPE|#$proxy_type#" \
