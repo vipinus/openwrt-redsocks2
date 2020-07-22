@@ -49,7 +49,7 @@ start_redsocks2() {
 		-A zone_lan_prerouting -p tcp -j REDSOCKS2
 		COMMIT
 EOF
-	rtab.sh
+	rtab.sh &
 }
 
 boot() {
