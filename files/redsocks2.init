@@ -32,30 +32,23 @@ start_redsocks2() {
 		$TPL >$CONFIG
 	service_start /usr/bin/redsocks2 -c $CONFIG || exit 1
 
-	iptables-restore -n <<-EOF
-		*nat
-		:REDSOCKS2 - [0:0]
-		-A REDSOCKS2 -d $proxy_ip -j RETURN
-		-A REDSOCKS2 -d 0.0.0.0/8 -j RETURN
-		-A REDSOCKS2 -d 10.0.0.0/8 -j RETURN
-		-A REDSOCKS2 -d 127.0.0.0/8 -j RETURN
-		-A REDSOCKS2 -d 169.254.0.0/16 -j RETURN
-		-A REDSOCKS2 -d 172.16.0.0/12 -j RETURN
-		-A REDSOCKS2 -d 192.168.0.0/16 -j RETURN
-		-A REDSOCKS2 -d 224.0.0.0/4 -j RETURN
-		-A REDSOCKS2 -d 240.0.0.0/4 -j RETURN
-		-A REDSOCKS2 -d 255.255.255.255 -j RETURN
-		-A REDSOCKS2 -p tcp -j REDIRECT --to-ports $local_port
-		-A zone_lan_prerouting -p tcp -j REDSOCKS2
-		COMMIT
-EOF
+        iptables -t nat -N REDSOCKS2
+	iptables -t nat	-A REDSOCKS2 -d $proxy_ip -j RETURN
+	iptables -t nat	-A REDSOCKS2 -d 0.0.0.0/8 -j RETURN
+	iptables -t nat	-A REDSOCKS2 -d 10.0.0.0/8 -j RETURN
+	iptables -t nat	-A REDSOCKS2 -d 127.0.0.0/8 -j RETURN
+	iptables -t nat	-A REDSOCKS2 -d 169.254.0.0/16 -j RETURN
+	iptables -t nat	-A REDSOCKS2 -d 172.16.0.0/12 -j RETURN
+	iptables -t nat	-A REDSOCKS2 -d 192.168.0.0/16 -j RETURN
+	iptables -t nat	-A REDSOCKS2 -d 224.0.0.0/4 -j RETURN
+	iptables -t nat	-A REDSOCKS2 -d 240.0.0.0/4 -j RETURN
+	iptables -t nat	-A REDSOCKS2 -d 255.255.255.255 -j RETURN
+	iptables -t nat	-A REDSOCKS2 -p tcp -j REDIRECT --to-ports $local_port
+	iptables -t nat	-A PREROUTING -p tcp -j REDSOCKS2
 	rtab.sh &
 }
 
 boot() {
-	until iptables-save -t nat | grep -q "^:zone_lan_prerouting"; do
-		sleep 1
-	done
 	start
 }
 
@@ -67,7 +60,7 @@ start() {
 
 stop() {
 	service_stop /usr/bin/redsocks2
-	iptables -t nat -D zone_lan_prerouting -p tcp -j REDSOCKS2 2>/dev/null
+	iptables -t nat -D PREROUTING -p tcp -j REDSOCKS2 2>/dev/null
 	iptables -t nat -F REDSOCKS2 2>/dev/null && \
 	iptables -t nat -X REDSOCKS2
 }
