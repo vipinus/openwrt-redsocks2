@@ -30,7 +30,7 @@ start_redsocks2() {
 		-e "s#|AUTO_PROXY|#$auto_proxy#" \
 		-e "s#|TIMEOUT|#${timeout:-5}#" \
 		$TPL >$CONFIG
-	service_start /usr/bin/redsocks2 -c $CONFIG || exit 1
+#	service_start /usr/bin/redsocks2 -c $CONFIG || exit 1
 
         iptables -t nat -N REDSOCKS2
 	iptables -t nat	-A REDSOCKS2 -d $proxy_ip -j RETURN
